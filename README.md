@@ -1,31 +1,38 @@
 # Fraud Detection for E-commerce and Credit Cards
 
-This project focuses on building a robust fraud detection system to identify fraudulent activities in e-commerce transactions and credit card usage. The current phase covers comprehensive data analysis and a preprocessing pipeline.
+This project implements a comprehensive fraud detection system designed to identify fraudulent activities in e-commerce and banking transactions. The solution spans from data preprocessing and geolocation mapping to ensemble modeling and SHAP-based explainability.
 
 ## 🚀 Key Features
 
-- **Exploratory Data Analysis (EDA)**: Detailed univariate and bivariate analysis to understand fraud patterns and feature distributions.
-- **Geolocation Integration**: Mapping IP addresses to countries to identify high-risk geographical regions.
-- **Advanced Feature Engineering**: Creation of time-based features (e.g., `time_since_signup`) and behavioral velocity features (e.g., `device_usage_count`).
-- **Class Imbalance Handling**: Applied SMOTE (Synthetic Minority Over-sampling Technique) to balance the target classes for better model performance.
-- **Modular Pipeline**: Clean and reusable Python modules for easy integration into machine learning workflows.
+- **Geolocation Integration**: IP addresses were mapped to countries to identify high-risk regions.
+- **Advanced Feature Engineering**: Temporal features (e.g., `time_since_signup`) and behavioral velocity metrics (e.g., `device_usage_count`, `ip_usage_count`) were engineered to capture bot-like behavior.
+- **Class Imbalance Management**: SMOTE was utilized to balance training data, ensuring robust detection of minority fraud cases.
+- **High-Performance Modeling**: A Random Forest ensemble was developed, achieving an **F1-Score of 0.90** and an **AUC-PR of 0.97**.
+- **Model Explainability (XAI)**: SHAP analysis was applied to interpret model decisions and identify primary fraud drivers.
+- **Business Insights**: Actionable recommendations were formulated to mitigate risk through dynamic velocity thresholds and user sandboxing.
 
 ## 📂 Project Structure
 
 ```text
 fraud-detection/
 ├── data/
-│   ├── raw/             # Original datasets (Fraud_Data.csv, etc.)
-│   └── processed/       # Final engineered and balanced dataset
+│   ├── raw/                 # Original datasets (Fraud_Data.csv, IpAddress_to_Country.csv)
+│   └── processed/           # Cleaned, engineered, and balanced datasets
 ├── notebooks/
-│   ├── eda-fraud-data.ipynb         # Interactive data exploration
-│   └── feature-engineering.ipynb   # Feature engineering & balancing pipeline
+│   ├── eda-fraud-data.ipynb         # Exploratory Data Analysis
+│   ├── feature-engineering.ipynb    # Feature engineering & balancing
+│   ├── model-training.ipynb         # Model building and evaluation
+│   └── model-explainability.ipynb   # SHAP analysis & interpretation
 ├── src/
-│   ├── preprocessing.py      # Data cleaning and IP mapping
-│   ├── feature_engineering.py # Custom feature creation logic
-│   └── imbalance_handler.py   # SMOTE implementation
-├── .gitignore
-└── requirements.txt     # Python dependencies
+│   ├── preprocessing.py      # IP mapping and cleaning
+│   ├── feature_engineering.py # Velocity and time feature logic
+│   ├── imbalance_handler.py   # SMOTE implementation
+│   └── modeling.py            # Model training and evaluation utilities
+├── scripts/
+│   └── update_notebook.py     # Helper for programmatically updating notebooks
+├── FINAL_REPORT.md            # Comprehensive project summary and insights
+├── requirements.txt           # Python dependencies
+└── README.md
 ```
 
 ## 🛠️ Installation
@@ -42,17 +49,17 @@ fraud-detection/
 
 ## 💻 How to Use
 
-The project is designed to be interactive through Jupyter Notebooks:
+The project workflow is organized into sequential Jupyter Notebooks:
 
-1.  **Run EDA**: Open `notebooks/eda-fraud-data.ipynb` to view data insights and fraud distributions.
-2.  **Generate Features**: Run `notebooks/feature-engineering.ipynb`. This notebook uses the core scripts to:
-    - Clean the raw data.
-    - Map IP addresses to countries.
-    - Create engineered features.
-    - Apply SMOTE to balance the dataset.
-    - Save the result to `data/processed/balanced_fraud_data.csv`.
+1.  **Data Analysis**: Run `notebooks/eda-fraud-data.ipynb` for initial insights.
+2.  **Feature Pipeline**: Execute `notebooks/feature-engineering.ipynb` to clean data and generate the balanced training set.
+3.  **Model Development**: Use `notebooks/model-training.ipynb` to train the Random Forest model and view performance metrics.
+4.  **Explainability**: Open `notebooks/model-explainability.ipynb` to view SHAP interpretations and business recommendations.
 
-## 📈 Next Steps
-- Implement Model Development (Training and Evaluation).
-- Develop model explainability using SHAP or LIME.
-- Set up a deployment pipeline for real-time fraud detection.
+## 📈 Performance Summary
+
+The final **Random Forest** model outperformed the baseline Logistic Regression across all key metrics:
+- **Precision (Fraud)**: 0.96
+- **Recall (Fraud)**: 0.85
+- **F1-Score**: 0.90
+- **AUC-PR**: 0.97
